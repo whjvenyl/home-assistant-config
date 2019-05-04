@@ -11,6 +11,9 @@ __pycache__
 config/.cloud
 config/.storage
 config/deps
+.cloud
+.storage
+deps
 
 # Specific file ignores
 config/.config_entries.json
@@ -19,6 +22,7 @@ config/.ios.conf
 config/.spotify-token-cache
 config/.tradfri_psk.conf
 config/.uuid
+config/.HA_VERSION
 config/core
 config/html5_push_registrations.conf
 config/ip_bans.yaml
@@ -29,11 +33,31 @@ config/pyozw.sqlite
 config/secrets.yaml
 config/zwcfg_*
 config/zwscene.xml
+.config_entries.json
+.homekit.state
+.ios.conf
+.spotify-token-cache
+.tradfri_psk.conf
+.uuid
+.HA_VERSION
+core
+html5_push_registrations.conf
+ip_bans.yaml
+known_devices.yaml
+options.xml
+OZW_Log.txt
+pyozw.sqlite
+secrets.yaml
+zwcfg_*
+zwscene.xml
 
 # Ignore add-on files
 config/aircast.xml
 config/airsonos.xml
 config/notebooks
+aircast.xml
+airsonos.xml
+notebooks
 
 # Ignore files created by IDE's
 .vscode
@@ -42,23 +66,3 @@ config/notebooks
 
 # Specific keeps
 !.gitkeep
-
-
-aircast.xml
-airsonos.xml
-!*.yaml
-!.gitignore
-secrets.yaml
-known_devices.yaml
-*.conf
-git_token.txt
-.homekit.state
-.storage/*
-.uuid
-.HA_VERSION
-home-assistant_v2.db-shm
-home-assistant_v2.db-wal
-www/pictures/guest_wifi.png
-www/pictures/wifi.png
-custom_components/__pycache__
-.storage/custom_updater.cards
