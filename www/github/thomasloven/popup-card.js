@@ -9,7 +9,7 @@ customElements.whenDefined('card-tools').then(() => {
     if(!cardTools.lovelace) return;
     const data = Object.assign({},
       cardTools.lovelace.config.popup_cards,
-      cardTools.lovelace.config.views[cardTools.lovelace.current_view].popup_cards,
+      cardTools.lovelace.config.views[cardTools.lovelace.current_view] ? cardTools.lovelace.config.views[cardTools.lovelace.current_view].popup_cards : {},
     );
     if(e.detail) {
       cardTools.logger(`Opening more-info dialog for ${e.detail.entityId}`, thisScript);

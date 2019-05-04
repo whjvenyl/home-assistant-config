@@ -1,0 +1,9 @@
+---
+# Adds an iframe panel to the Home Assistant frontend for the Hass Configurator Panel add-on.
+#
+# https://www.home-assistant.io/components/panel_iframe/
+#
+configurator:
+  title: IDE
+  icon: mdi:wrench
+  url: !secret ide_url

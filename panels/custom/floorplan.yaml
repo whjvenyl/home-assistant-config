@@ -1,0 +1,11 @@
+---
+# Adds a custom panel to the Home Assistant frontend for the Floorplan add-on.
+#
+# https://github.com/pkozul/ha-floorplan/
+#
+name: floorplan
+
+sidebar_title: Floorplan
+sidebar_icon: mdi:home
+url_path: floorplan
+config: !include ./../../floorplan.yaml

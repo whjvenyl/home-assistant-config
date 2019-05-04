@@ -29,7 +29,7 @@ class FoldEntityRow extends cardTools.LitElement {
     return cardTools.LitHtml`
     <style>
     #items {
-      padding: 0 0 0 0;
+      padding: 0 0 0 40px;
       margin: 0;
     }
     [closed] > div {
