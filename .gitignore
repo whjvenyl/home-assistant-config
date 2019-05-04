@@ -11,9 +11,11 @@ __pycache__
 config/.cloud
 config/.storage
 config/deps
+config/tts
 .cloud
 .storage
 deps
+tts
 
 # Specific file ignores
 config/.config_entries.json
