@@ -1,0 +1,186 @@
+---
+#
+# Customizes the entities for use in Home Assistant
+#
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+#
+automation.xiaomi_staubsauger_automatisch_starten:
+  friendly_name: Automatisch starten
+automation.xiaomi_staubsauger_taglich_saugen:
+  friendly_name: Täglich saugen
+automation.xiaomi_staubsauger_benachrichtigung_error:
+  friendly_name: Benachrichtigung - Error
+automation.xiaomi_staubsauger_benachrichtigung_fertig:
+  friendly_name: Benachrichtigung - fertig
+automation.xiaomi_staubsauger_benachrichtigung_gestartet:
+  friendly_name: Benachrichtigung - gestartet
+automation.xiaomi_staubsauger_abwesenheit:
+  friendly_name: Abwesenheit
+automation.xiaomi_staubsauger_fertig:
+  friendly_name: Reinigung abgeschlossen
+  icon: mdi:message
+automation.xiaomi_staubsauger_fehler:
+  friendly_name: Fehler
+  icon: mdi:message-alert
+automation.xiaomi_staubsauger_gestartet:
+  friendly_name: Gestartet
+  icon: mdi:message
+automation.xiaomi_staubsauger_neustart:
+  friendly_name: Neustarten (Bürste blockiert)
+automation.xiaomi_staubsauger_error_stop:
+  friendly_name: Deaktivieren (b. Fehler)
+group.lights_group:
+  control: hidden
+  order: 1
+group.living_room:
+  control: hidden
+  order: 2
+group.bed_room:
+  control: hidden
+  order: 3
+group.others:
+  control: hidden
+  order: 4
+group.office:
+  control: hidden
+  order: 5
+group.lights_floor:
+  control: hidden
+  order: 6
+group.kitchen:
+  control: hidden
+  order: 7
+group.weather:
+  control: hidden
+  order: 8
+group.all_automations:
+  control: hidden
+  friendly_name: Automatisierungen
+  hidden: false
+group.all_scripts:
+  control: hidden
+  friendly_name: Skripte
+  hidden: false
+group.devices:
+  control: hidden
+group.family:
+  control: hidden
+group.music:
+  control: hidden
+group.light:
+  control: hidden
+group.lights_bed_room:
+  control: hidden
+group.lights_living_room:
+  control: hidden
+group.lights_office:
+  control: hidden
+group.presence:
+  control: hidden
+group.power_sockets:
+  control: hidden
+  friendly_name: 'Steckdosen '
+group.radiator:
+  control: hidden
+group.radiator_bed_room:
+  control: hidden
+group.radiator_living_room:
+  control: hidden
+group.radiator_office:
+  control: hidden
+group.vacuum:
+  control: hidden
+group.vacuum_group:
+  control: hidden
+group.family_presence:
+  name: Family Presence
+  entities:
+  - person.laura
+  - person.tobias
+input_number.radiator_temp_living_room:
+  friendly_name: Soll °C
+input_number.radiator_temp_office:
+  friendly_name: Soll °C
+  unit_of_measurement: °C
+input_number.radiator_temp_bath:
+  friendly_name: Soll °C
+input_number.radiator_temp_bed_room:
+  friendly_name: Soll °C
+light.lights_all:
+  friendly_name: Alle Lampen
+light.lights_living_room_2:
+  friendly_name: Wohnzimmer 2 Lichter
+  icon: mdi:ceiling-light
+light.lights_bed_room:
+  friendly_name: Schlafzimmer Lichter
+  icon: mdi:bed-empty
+light.light_bedroom:
+  friendly_name: Deckenlampe Schlafzimmer
+  icon: mdi:ceiling-light
+light.light_living_room_2:
+  friendly_name: Deckenlampe Wohnzimmer 2
+  icon: mdi:ceiling-light
+light.light_entry:
+  friendly_name: Eingang
+light.lights_floor:
+  friendly_name: Gang
+sensor.battery_radiator_office_1:
+  icon: mdi:battery-50
+sensor.battery_radiator_office_2:
+  icon: mdi:battery-50
+sensor.battery_radiator_bedroom:
+  icon: mdi:battery-50
+sensor.battery_radiator_livingroom:
+  icon: mdi:battery-50
+sensor.humidity_158d0002239fb5:
+  friendly_name: Luftfeuchtigkeit
+  icon: mdi:water-percent
+sensor.temperature_158d0001b8c96c:
+  friendly_name: Temperatursensor Schlafzimmer
+sensor.temperature_158d0001b8c998:
+  friendly_name: Temperatursensor Wohnzimmer
+sensor.online_time:
+  friendly_name: HA Time Online
+sensor.pws_temp_c:
+  friendly_name: Temperatur
+sensor.pws_feelslike_string:
+  friendly_name: gefühlte Temperatur
+sensor.pws_feelslike_c:
+  friendly_name: gefühlte Temperatur
+sensor.pws_weather:
+  friendly_name: Zusammenfassung
+sensor.valve_bath:
+  icon: mdi:fan
+sensor.valve_bed_room:
+  icon: mdi:fan
+sensor.valve_living_room:
+  icon: mdi:fan
+sensor.valve_office:
+  icon: mdi:fan
+sensor.xiaomi_vacuum_main_brush_left:
+  friendly_name: Hauptbürste
+  icon: mdi:blur-linear
+sensor.xiaomi_vacuum_side_brush_left:
+  friendly_name: Seitenbürste
+  icon: mdi:blur-linear
+switch.lights_all:
+  friendly_name: alle Lichter
+  icon: mdi:lightbulb-on
+switch.lights_living_room:
+  friendly_name: Wohnzimmer Licht
+  icon: mdi:lightbulb-on
+switch.radiator_on_off:
+  friendly_name: Heizung
+sensor.dark_sky_temperature:
+  friendly_name: aktuelle Temperatur
+sensor.dark_sky_apparent_temperature:
+  friendly_name: gefühlte Temperatur
+weather.dark_sky:
+  friendly_name: Wetter
+zone.home:
+  track_ios: 'false'
+person.laura:
+  id: laura
+script.good_night:
+  friendly_name: Good Night
+  icon: mdi:sleep

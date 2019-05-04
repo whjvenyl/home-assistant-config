@@ -1,0 +1,10 @@
+---
+# The time and date (time_date) sensor platform simple displays the time in various 
+# formats, the date, or both.
+#
+# https://www.home-assistant.io/components/time_date/
+#
+platform: time_date
+display_options:
+  - 'time'
+  - 'date'

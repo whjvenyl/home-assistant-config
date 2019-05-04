@@ -1,0 +1,11 @@
+---
+# A component which allows you to track and update custom cards/components
+# and python_scripts.
+#
+# https://github.com/custom-components/custom_updater
+#
+custom_updater:
+  track:
+  - components
+  - cards
+  hide_sensor: true

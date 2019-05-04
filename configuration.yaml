@@ -1,245 +1,51 @@
+---
+# Welcome to my Home Assistant configuration!
+#
+# The configuration.yaml is only used to bootstrap the system
+# and contains some minimal, but vital, settings.
+#
 homeassistant:
+  # Name of this Home Assistant instance
   name: Home
+
+   # Location required to calculate the time the sun rises and sets
   latitude: !secret latitude
   longitude: !secret longitude
-  elevation: 141
+
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret elevation
+
+  # metric for Metric, imperial for Imperial
   unit_system: metric
-  time_zone: Europe/Berlin
-  customize: !include customize.yaml
-  packages: !include_dir_named packages
 
-frontend:
-  javascript_version: latest
+  # Pick yours from here:
+  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Zurich
 
-lovelace:
-  mode: yaml
+  # Load packages
+  # packages: !include_dir_named packages
+  packages: !include_dir_named integrations
+  
+  whitelist_external_dirs:
+   - /tmp
+   - /share
 
-config:
+# Enables Person Component
+person:
+  - name: Tobias
+    id: tobias
+    user_id: 2d566e55d2ef48b1a45bf32ad07a7338
+    device_trackers:
+      - device_tracker.galaxy_s8_wifi
+      - device_tracker.galaxy_s8_bt
+  - name: Laura
+    id: laura
+    user_id: 219a1399fb684a329e6831348c5c8222
+    device_trackers:
+      - device_tracker.iphone6
 
-http:
-  ssl_certificate: !secret ssl_certificate
-  ssl_key: !secret ssl_key
+# Discover some devices automatically
+discovery:
 
-api:
-
-updater:
-  include_used_components: true
-
-# discovery:
-    # ignore:
-    # - samsung_tv
-
-system_health:
-
-recorder:
-  purge_interval: 1
-  purge_keep_days: 1
-  exclude:
-    domains:
-      - group
-      - device_tracker
-      - sensor
-      - light
-      - media_player
-      - scene
-      - switch
-      - camera
-      - switch
-      - binary_sensor
-      - climate
-      - calendar
-    entities:
-      - sun.sun
-      - automation.battery_persistent_notification
-      - weather.dark_sky
-      
-history:
-  exclude:
-    domains:
-      - group
-      - calendar
-
-logbook:
-  exclude:
-    domains:
-      - group
-      - calendar
-      
-map:
-
-sun:
-
-panel_iframe:
-  grafana:
-    title: Statistik
-    url: !secret grafana_url
-    icon: mdi:elevation-rise
-  configurator:
-    title: Configurator
-    icon: mdi:wrench
-    url: !secret configurator_url
-
-# group: !include groups.yaml
-
-automation: !include automations.yaml
-
-script: !include scripts.yaml
-
-shell_command: !include shell_command.yaml
-
-scene: !include scenes.yaml
-
-switch: !include switch.yaml  
-
-light: !include light.yaml
-
-input_select: !include input_selects.yaml
-
-input_boolean: !include input_boolean.yaml
-
-input_datetime: !include input_datetime.yaml
-
-# input_text: !include input_text.yaml
-
-# input_number: !include input_number.yaml
-
-sensor: !include senors.yaml
-
-# binary_sensor: !include binary_sensors.yaml
-
-counter: !include counter.yaml
-
-ios: !include push.yaml
-
-homekit: !include homekit.yaml
-
-media_player: !include media_player.yaml
-
-camera: !include camera.yaml
-
-homematic:
-  interfaces:
-    rf:
-      host: 192.168.200.21
-    groups:
-      host: 192.168.200.21
-      port: 9292
-      path: /groups
-  hosts:
-    ccu2:
-      host: 192.168.200.21
-      username: !secret homematic_user
-      password: !secret ccu_password
-
-vacuum:
-  - platform: xiaomi_miio
-    host: 192.168.200.28
-    token: !secret xiaomi_vacuum
-
-device_tracker:
-  - platform: fritz
-    consider_home: 600
-
-xiaomi_aqara:
-  discovery_retry: 5
-  gateways:
-    - key: !secret xiaomi_gateway
-
-mqtt:
-  broker: 192.168.200.50
-  port: 1883
-  client_id: home-assistant-1
-  keepalive: 60
-  username: homeassistant  
-  password: !secret mqtt_password
-
-influxdb:
-  host: 192.168.200.50
-  database: home_assistant
-  username: home-assistant
-  password: !secret influxdb_password
-  exclude:
-    domains:
-      - group
-      - automations
-      - device_tracker
-      - script
-      - camera
-      - light
-      - input_boolean
-      - input_select
-      - input_text
-      - input_datetime
-      - input_number
-      - scene
-      - remote
-      - switch
-      - media_player
-      - light
-      - binary_sensor
-      - calendar
-    entities:
-      - sun.sun
-      - sensor.time
-      - sensor.time_date
-      - sensor.date_time
-      - weather.dark_sky
-
-hue:
-  bridges:
-    - host: 192.168.200.52
-      allow_unreachable: true
-      allow_hue_groups: false
-
-ffmpeg:
-
-remote:
-  - platform: harmony
-    name: harmony_hub
-    host: 192.168.200.55
-
-custom_updater:
-  track:
-    - cards
-    - components
-  card_urls:
-    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
-    - https://raw.githubusercontent.com/maykar/custom-lovelace/master/tracker.json
-
-bmw_connected_drive:
- name:
-   username: !secret bmw_user
-   password: !secret bmw_password
-   region: "rest_of_world"
-
-weather:
-  - platform: darksky
-    api_key: !secret dark_syk
-
-calendar:
-  - platform: caldav
-    username: !secret next_user
-    password: !secret next_password
-    url: !secret next_url
-    custom_calendars:
-      - name: 'Putzfrau'
-        calendar: 'Privat'
-        search: 'Putzfrau'
-      - name: 'Urlaub'
-        calendar: 'Privat'
-        search: 'Urlaub'
-      - name: 'BusinessTrip'
-        calendar: 'Arbeit'
-        search: 'Business Trip'
-
-yeelight:
-  devices:
-    192.168.200.59:
-      name: Nachttischlampe Wolfgang
-    192.168.200.42:
-      name: Nachttischlampe Anita
-
-# Custom Components
-fritzbox_guestwifi:
-  username: !secret fritz_user
-  password: !secret fritz_password
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:

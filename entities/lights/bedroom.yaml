@@ -1,0 +1,10 @@
+---
+# Light group: Bedroom
+#
+# https://www.home-assistant.io/components/light.group/
+#
+platform: group
+name: lights_bed_room
+entities:
+  - light.light_nightstand
+  - light.light_bedroom

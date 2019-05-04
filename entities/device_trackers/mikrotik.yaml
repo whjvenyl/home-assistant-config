@@ -1,0 +1,24 @@
+---
+#
+# https://www.home-assistant.io/components/device_tracker.mikrotik/
+#
+platform: mikrotik
+
+# This is the Hass.io add-on slug, allowing a direct connection to the addon.
+host: 192.168.2.1
+
+# Authentication credentials
+username: !secret mikrotik_username
+password: !secret mikrotik_password
+
+ssl: false
+encoding: utf-8
+port: 8729
+method: capsman
+interval_seconds: 10
+consider_home: 600
+
+# I really don't want to track each device that enters my WiFi
+new_device_defaults:
+  track_new_devices: false
+  hide_if_away: false

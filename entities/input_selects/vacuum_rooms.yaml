@@ -1,0 +1,17 @@
+---
+# This is an input select to use with automations
+#
+# https://www.home-assistant.io/components/input_select/
+#
+vacuum_rooms:
+  name: Räume
+  icon: mdi:broom
+  options:
+    - --
+    - Wohnzimmer
+    - Schlafzimmer
+    - Büro
+    - Bad
+    - Küche
+    - Flur
+  initial: --

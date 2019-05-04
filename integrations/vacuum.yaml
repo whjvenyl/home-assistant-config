@@ -1,0 +1,577 @@
+---
+#
+# The vacuum component enables the ability to control home cleaning robots
+# within Home Assistant.
+#
+# https://www.home-assistant.io/components/vacuum/
+#
+# vacuum: !include_dir_list ../entities/vacuums
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret vacuum_host
+    token: !secret vacuum_token
+
+counter:
+  xiaomo_errors:
+    initial: 0
+    step: 1
+
+input_boolean:
+  # daily_vacuum_first_run:
+  #   name: Daily Vacuum First Run
+  #   initial: off
+  # disable_daily_vacuum:
+  #   name: Disable Daily Vacuum Automation
+  #   initial: on
+  # disable_dustbin_notification:
+  #   name: Disable Dustbin Notification
+  #   initial: off
+  automation_xiaomi_vacuum:
+    name: Staubsaugerautomatisierung
+    icon: mdi:home-assistant
+
+# input_select:
+  # vacuum_room:
+  #   name: Choose a room to clean
+  #   options:
+  #     - Select Input
+  #     - All Except Bedroom and Ensuite
+  #     - Bedroom
+  #     - Dining Room
+  #     - Ensuite Bathroom
+  #     - Entryway
+  #     - Kitchen
+  #     - Living Room
+  #     - Main Bathroom
+  #     - Mopping Surfaces
+  #     - Projector Room
+  #     - Study
+  #   initial: Select Input
+  # vacuum_rooms:
+  #   name: Räume
+  #   icon: mdi:broom
+  #   options:
+  #     - --
+  #     - Wohnzimmer
+  #     - Schlafzimmer
+  #     - Büro
+  #     - Bad
+  #     - Küche
+  #     - Flur
+  #   initial: --
+
+script:
+  vacuum_turn_on: # 1534539954375
+    alias: Xiaomi Staubsauger einschalten
+    sequence:
+    - data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      service: vacuum.turn_on
+  '1534540060262':
+    alias: Xiaomi Staubsauger ausschalten
+    sequence:
+    - data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      service: vacuum.turn_off
+  vacuum_office: # '1543666580682'
+    alias: Xiaomi SaugRobo - Büro
+    sequence:
+    - data:
+        command: app_zoned_clean
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params:
+        - - 21713
+          - 22537
+          - 27663
+          - 25887
+          - 1
+      service: vacuum.send_command
+  vacuum_kitchen: # '1543666771838':
+    alias: Xiaomi SaugRobo - Küche
+    sequence:
+    - data:
+        command: app_zoned_clean
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params:
+        - - 19870
+          - 22641
+          - 21620
+          - 25991
+          - 1
+      service: vacuum.send_command
+  '1543666867257':
+    alias: Xiaomi SaugRobo - Flur
+    sequence:
+    - data:
+        command: app_zoned_clean
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params:
+        - - 16818
+          - 20376
+          - 25118
+          - 22626
+          - 1
+      service: vacuum.send_command
+  vacuum_bed_room: # '1543666909272':
+    alias: Xiaomi SaugRobo - Schlafzimmer
+    sequence:
+    - data:
+        command: app_zoned_clean
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params:
+        - - 19788
+          - 15101
+          - 23538
+          - 21601
+          - 1
+      service: vacuum.send_command
+  vacuum_living_room: # '1543666947492':
+    alias: Xiaomi SaugRobo - Wohnzimmer
+    sequence:
+    - data:
+        command: app_zoned_clean
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params:
+        - - 23607
+          - 14678
+          - 27657
+          - 20628
+          - 1
+      service: vacuum.send_command
+  '1543666985219':
+    alias: Xiaomi SaugRobo - Bad
+    sequence:
+    - data:
+        command: app_zoned_clean
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params:
+        - - 25071
+          - 20852
+          - 26921
+          - 22652
+          - 1
+      service: vacuum.send_command
+  '1547995682348':
+    alias: Sensor gereinigt
+    sequence:
+    - data:
+        command: reset_consumable
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params: sensor_dirty_time
+      service: vacuum.send_command
+  '1547995832032':
+    alias: Filter gereinigt
+    sequence:
+    - data:
+        command: reset_consumable
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params: filter_work_time
+      service: vacuum.send_command
+  '1547995869377':
+    alias: Seitenbürste gereinigt
+    sequence:
+    - data:
+        command: reset_consumable
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params: side_brush_work_time
+      service: vacuum.send_command
+  '1547995909810':
+    alias: Hauptbürste gereinigt
+    sequence:
+    - data:
+        command: reset_consumable
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        params: main_brush_work_time
+      service: vacuum.send_command
+
+sensor:
+  - platform: template
+    sensors:
+      xiaomi_vacuum_status:
+        friendly_name: "Staubsauger Status"
+        value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.status }}'
+      xiaomi_vacuum_main_brush_left:
+        friendly_name: "Staubsauger Main Brush"
+        unit_of_measurement: 'h'
+        value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.main_brush_left }}'
+      xiaomi_vacuum_side_brush_left:
+        friendly_name: "Staubsauger Side Brush"
+        unit_of_measurement: 'h'
+        value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.side_brush_left }}'
+      xiaomi_vacuum_filter_left:
+        friendly_name: "Staubsauger Filter"
+        unit_of_measurement: 'h'
+        value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.filter_left }}'
+      xiaomi_vacuum_sensor_dirty_left:
+        friendly_name: "Staubsauger Sensor"
+        unit_of_measurement: 'h'
+        value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.sensor_dirty_left }}'
+      xiaomi_vacuum_sensor_battery:
+        friendly_name: "Staubsauger Batterie"
+        unit_of_measurement: '%'
+        value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.battery_level }}'
+        icon_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.battery_icon }}'
+      # xiaomi_vacuum_cleaner_status:
+      #   friendly_name: "Xiaomi Vacuum Cleaner Status"
+      #   entity_id:
+      #     - vacuum.xiaomi_vacuum_cleaner
+      #   value_template: "{{ states.vacuum.xiaomi_vacuum_cleaner }}"
+      # xiaomi_vacuum_sensor_status:
+      #   friendly_name: Status
+      #   entity_id:
+      #     - vacuum.xiaomi_vacuum_cleaner
+      #   value_template: 'Status: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.status }}'
+      #   icon_template: >
+      #     {% set val =  states.vacuum.xiaomi_vacuum_cleaner.attributes.status  %}
+      #     {% if val == 'Charging' %}
+      #       mdi:battery-charging
+      #     {% elif val == 'Cleaning' %}
+      #       mdi:move-resize
+      #     {% elif val == 'Returning home' %}
+      #       mdi:keyboard-return
+      #     {% elif val == 'Idle' %}
+      #       mdi:dots-horizontal
+      #     {% elif val == 'Paused' %}
+      #       mdi:pause-circle
+      #     {% else %}
+      #       mdi:help-circle
+      #     {% endif %}
+      # xiaomi_vacuum_sensor_fan_speed:
+      #   friendly_name: Fan Speed
+      #   entity_id:
+      #     - vacuum.xiaomi_vacuum_cleaner
+      #   value_template: 'Mode: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.fan_speed }}'
+      #   icon_template: 'mdi:speedometer'
+      # xiaomi_vacuum_sensor_battery:
+      #   friendly_name: Vacuum Battery
+      #   entity_id:
+      #     - vacuum.xiaomi_vacuum_cleaner
+      #   value_template: 'Battery: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.battery_level }}'
+      #   device_class: battery
+      #   unit_of_measurement: '%'
+      #   icon_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.battery_icon }}'
+
+###############################################################################
+#                               Automations
+###############################################################################
+automation:
+  # - alias: Start Daily Vacuum
+  #   trigger:
+  #   - platform: state
+  #     entity_id: group.family_presence
+  #     from: 'home'
+  #     to: 'not_home'
+  #     for:
+  #       minutes: 2
+  #   - platform: time
+  #     at: '7:02:00'
+  #   condition:
+  #     condition: and
+  #     conditions:
+  #     - condition: state
+  #       entity_id: input_boolean.daily_vacuum_first_run
+  #       state: 'off'
+  #     - condition: time
+  #       after: '07:00:00'
+  #       before: '22:00:00'
+  #     - condition: state
+  #       entity_id: group.family_presence
+  #       state: 'not_home'
+  #     - condition: state
+  #       entity_id: input_boolean.disable_daily_vacuum
+  #       state: 'off'
+  #   action:
+  #   - delay: '00:00:30'
+  #   - service: vacuum.turn_on
+  #     entity_id: vacuum.xiaomi_vacuum_cleaner
+  #   - service: homeassistant.turn_on
+  #     entity_id: input_boolean.daily_vacuum_first_run
+  #
+  # - alias: Reset Daily Vacuum First Run state at midnight
+  #   trigger:
+  #   - platform: time
+  #     at: '0:00:00'
+  #   action:
+  #   - service: homeassistant.turn_off
+  #     entity_id: input_boolean.daily_vacuum_first_run
+
+  # - alias: Send alert after daily vacuum to empty the dustbin
+  #   trigger:
+  #   - platform: state
+  #     entity_id: group.family_presence
+  #     to: 'home'
+  #     for:
+  #       minutes: 2
+  #   condition:
+  #     condition: and
+  #     conditions:
+  #     - condition: state
+  #       entity_id: input_boolean.daily_vacuum_first_run
+  #       state: 'on'
+  #     - condition: time
+  #       after: '08:30:00'
+  #       before: '22:30:00'
+  #     - condition: template
+  #       value_template: >
+  #         {% if states.automation.send_alert_after_daily_vacuum_to_empty_the_dustbin.last_triggered is not none %}
+  #           {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.send_alert_after_daily_vacuum_to_empty_the_dustbin.attributes.last_triggered) | int > 1800 %} true {% else %} false
+  #           {% endif %}
+  #         {% else %}
+  #         false
+  #         {% endif %}
+  #     - condition: state
+  #       entity_id: input_boolean.disable_dustbin_notification
+  #       state: 'off'
+  #   action:
+  #     - service: script.speech_processing
+  #       data_template:
+  #         speech_message: >
+  #          {% if (is_state('device_tracker.google_maps_109209758211303121867', 'home')) or (is_state('device_tracker.rachels_iphone', 'home'))  %}
+  #            Attention!: the vacuum dustbin needs to be cleared.
+  #          {% endif %}
+  #     - service_template: >
+  #         {% if (is_state('device_tracker.google_maps_109209758211303121867', 'home')) and (is_state('device_tracker.rachels_iphone', 'home'))  %}
+  #           notify.trent_and_rachel
+  #         {% elif is_state('device_tracker.google_maps_109209758211303121867', 'home') %}
+  #           notify.trent
+  #         {% elif is_state('device_tracker.rachels_iphone', 'home') %}
+  #           notify.rachel
+  #         {% endif %}
+  #       data:
+  #         message: 'Hey, the vacuum dustbin needs to be cleared'
+  #         title: 'Vacuum Dustbin'
+  # - alias: Start Cleaning Room
+  #   hide_entity: True
+  #   trigger:
+  #   - platform: state
+  #     entity_id: input_select.vacuum_room
+  #     from: 'Select Input'
+  #   action:
+  #   - service: script.turn_on
+  #     data_template:
+  #       entity_id: >
+  #         {% if is_state("input_select.vacuum_room", "All Except Bedroom and Ensuite") %}
+  #           script.vacuum_all_except_bedroom_and_ensuite
+  #         {% elif is_state("input_select.vacuum_room", "Bedroom") %}
+  #           script.vacuum_bedroom
+  #         {% elif is_state("input_select.vacuum_room", "Dining Room") %}
+  #           script.vacuum_dining_room
+  #         {% elif is_state("input_select.vacuum_room", "Ensuite Bathroom") %}
+  #           script.vacuum_ensuite_bathroom
+  #         {% elif is_state("input_select.vacuum_room", "Entryway") %}
+  #           script.vacuum_entryway
+  #         {% elif is_state("input_select.vacuum_room", "Kitchen") %}
+  #           script.vacuum_kitchen
+  #         {% elif is_state("input_select.vacuum_room", "Living Room") %}
+  #           script.vacuum_living_room
+  #         {% elif is_state("input_select.vacuum_room", "Main Bathroom") %}
+  #           script.vacuum_main_bathroom
+  #         {% elif is_state("input_select.vacuum_room", "Mopping Surfaces") %}
+  #           script.vacuum_mopping_surfaces
+  #         {% elif is_state("input_select.vacuum_room", "Projector Room") %}
+  #           script.vacuum_projector_room
+  #         {% elif is_state("input_select.vacuum_room", "Study") %}
+  #           script.vacuum_study
+  #         {% else %}
+  #         {% endif %}
+  #   - service: input_select.select_option
+  #     entity_id: input_select.vacuum_room
+  #     data_template:
+  #       option: "Select Input"
+  
+  # -----
+  - id: xiaomi_vacuum_notification_off
+    alias: 'Xiaomi Staubsauger: fertig'
+    trigger:
+    - entity_id: sensor.xiaomi_vacuum_status
+      platform: state
+      to: Returning home
+    action:
+    - data:
+        message: 'Staubsauger fertig - Dauer: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.cleaning_time
+          }} min - gesaugte Fläche: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.cleaned_area
+          }} qm | Fehler {{ states.counter.xiaomo_errors.state }}'
+      service: notify.ios_iphonex
+    - data:
+        entity_id: input_select.vacuum_rooms
+        option: --
+      service: input_select.select_option
+  - id: xiaomi_vacuum_notification_on
+    alias: 'Xiaomi Staubsauger: gestartet'
+    trigger:
+    - entity_id: vacuum.xiaomi_vacuum_cleaner
+      from: docked
+      platform: state
+      to: cleaning
+    action:
+    - data:
+        data:
+          push:
+            category: vacuum_stop
+        message: Staubsauger gestartet
+      service: notify.ios_iphonex
+  - id: xiaomi_vacuum_notification_blocked
+    alias: 'Xiaomi Staubsauger: Fehler'
+    trigger:
+    - entity_id: sensor.xiaomi_vacuum_status
+      platform: state
+      to: Error
+    condition:
+    - condition: template
+      value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.error != ''Clean
+        main brush'' }}'
+    action:
+    - data:
+        data:
+          push:
+            category: vacuum_stop
+        message: 'Staubsauger blockiert - Error: {{ states.vacuum.xiaomi_vacuum_cleaner.attributes.error
+          }} '
+      service: notify.ios_iphonex
+  - id: '1521894687949'
+    alias: 'Xiaomi Staubsauger: Täglich saugen'
+    trigger:
+    - at: '16:00'
+      platform: time
+    condition:
+    - condition: state
+      entity_id: device_tracker.anni
+      state: not_home
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+    - condition: template
+      value_template: '{{ as_timestamp(utcnow()) + 1200 - as_timestamp(states.vacuum.xiaomi_vacuum_cleaner.last_updated)  >
+        10080 }}'
+    action:
+    - data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      service: vacuum.start
+  - id: '1523001167559'
+    alias: 'Xiaomi Staubsauger: Neustart'
+    trigger:
+    - entity_id: sensor.xiaomi_vacuum_status
+      platform: state
+      to: Error
+    condition:
+    - condition: template
+      value_template: '{{ states.vacuum.xiaomi_vacuum_cleaner.attributes.error == ''Clean
+        main brush'' }}'
+    action:
+    - data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      service: vacuum.start
+    - data:
+        entity_id: counter.xiaomo_errors
+      service: counter.increment
+  - id: '1533984172028'
+    alias: 'Xiaomi Staubsauger: Stoppen nach Push'
+    trigger:
+    - event_data:
+        actionName: STOP_VACUUM
+      event_type: ios.notification_action_fired
+      platform: event
+    condition: []
+    action:
+    - data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      service: vacuum.return_to_base
+  - id: '1542650541048'
+    alias: 'Xiaomi Staubsauger: Sensor kritisch'
+    trigger:
+    - below: '4'
+      entity_id: sensor.xiaomi_vacuum_sensor_dirty_left
+      platform: numeric_state
+    condition: []
+    action:
+    - data:
+        message: 'Sensor reinigen: {{ states.sensor.xiaomi_vacuum_sensor_dirty_left.state
+          }} h übrig'
+        notification_id: xiaomi_sensor
+        title: Xiaomi StaubRobo
+      service: persistent_notification.create
+  - id: '1543669218842'
+    alias: 'Xiaomi Staubsauger: Zonenreinigung'
+    trigger:
+    - entity_id: input_select.vacuum_rooms
+      platform: state
+    condition:
+    - condition: template
+      value_template: '{{ states.input_select.vacuum_rooms.state != "--" }}'
+    action:
+    - data_template:
+        entity_id: "{% if is_state(\"input_select.vacuum_rooms\", \"Wohnzimmer\") %}\n\
+          \  script.vacuum_living_room\n{% elif is_state(\"input_select.vacuum_rooms\", \"\
+          Schlafzimmer\") %}\n  script.vacuum_bed_room\n{% elif is_state(\"input_select.vacuum_rooms\"\
+          , \"Bad\") %}\n  script.1543666985219\n{% elif is_state(\"input_select.vacuum_rooms\"\
+          , \"Küche\") %}\n  script.vacuum_kitchen\n{% elif is_state(\"input_select.vacuum_rooms\"\
+          , \"Flur\") %}\n  script.1543666867257\n{% elif is_state(\"input_select.vacuum_rooms\"\
+          , \"Büro\") %}\n  script.vacuum_office\n{% endif %}\n"
+      service: script.turn_on
+  - id: '1544816542688'
+    alias: 'Xiaomi Staubsauger: Error stop'
+    trigger:
+    - entity_id: sensor.xiaomi_vacuum_status
+      platform: state
+      to: Error
+    condition: []
+    action:
+    - data:
+        entity_id: automation.xiaomi_staubsauger_automatisch_starten
+      service: automation.turn_off
+    - data:
+        entity_id: automation.xiaomi_staubsauger_taglich_saugen
+      service: automation.turn_off
+    - data:
+        message: Automatisierungen deaktiviert
+        notification_id: xiaomi_sensor
+        title: Xiaomi StaubRobo
+      service: persistent_notification.create
+  - id: '1548418632803'
+    alias: 'Xiaomi Staubsauger: Zähler zurücksetzen'
+    trigger:
+    - entity_id: vacuum.xiaomi_vacuum_cleaner
+      from: docked
+      platform: state
+      to: cleaning
+    condition: []
+    action:
+    - data:
+        entity_id: counter.xiaomo_errors
+      service: counter.reset
+  - id: '1550439793222'
+    alias: 'Xiaomi Staubsauger: Abwesenheit'
+    trigger:
+    - entity_id: sensor.presence
+      platform: state
+      to: not_home
+    condition:
+    - condition: state
+      entity_id: calendar.privat_putzfrau
+      state: 'off'
+    - condition: state
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+      state: docked
+    action:
+    - data:
+        data:
+          push:
+            category: vacuum_trigger
+        message: Staubsauger starten?
+      service: notify.ios_iphonex
+  - id: '1550439982602'
+    alias: 'Xiaomi Staubsauger: Starten nach Push'
+    trigger:
+    - event_data:
+        actionName: TRIGGER_VACUUM
+      event_type: ios.notification_action_fired
+      platform: event
+    condition: []
+    action:
+    - data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+      service: vacuum.start

@@ -1,0 +1,9 @@
+---
+# Light group: Floor
+#
+# https://www.home-assistant.io/components/light.group/
+#
+platform: group
+name: lights_floor
+entities:
+  - light.light_entry

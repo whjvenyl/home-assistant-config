@@ -1,0 +1,18 @@
+---
+# This is an input select to use with automations
+#
+# https://www.home-assistant.io/components/input_select/
+#
+scenes_living_room:
+  name: "Szenen"
+  options:
+    - --
+    - Wohnzimmer Licht
+    - Sehr hell
+    - Gedimmt
+    - Lesen
+    - Konzentrieren
+    - Energie tanken
+    - Entspannen
+    - Nachtlicht
+  initial: '--'

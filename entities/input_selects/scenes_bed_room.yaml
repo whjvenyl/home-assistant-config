@@ -1,0 +1,13 @@
+---
+# This is an input select to use with automations
+#
+# https://www.home-assistant.io/components/input_select/
+#
+scenes_bed_room:
+  name: "Szenen"
+  options:
+    - --
+    - Hell
+    - Nachtlicht
+    - Gedimmt
+  initial: '--'

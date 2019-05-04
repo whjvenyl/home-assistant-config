@@ -1,0 +1,9 @@
+---
+#
+# Customizes the bedside light in Home Assistant
+#
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+#
+light.nightstand:
+  friendly_name: Nachttischlampe
+  icon: mdi:desk-lamp
