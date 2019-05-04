@@ -3,7 +3,6 @@
 ![Project Maintenance][maintenance-shield]
 [![License][license-shield]](LICENSE.md)
 
-[![GitLab CI][gitlabci-shield]][gitlabci]
 [![GitHub Activity][commits-shield]][commits]
 [![GitHub Last Commit][last-commit-shield]][commits]
 
@@ -48,8 +47,6 @@ SOFTWARE.
 [commits]: https://github.com/whjvenyl/home-assistant-config/commits/master
 [contributors]: https://github.com/whjvenyl/home-assistant-config/graphs/contributors
 [whjvenyl]: https://github.com/whjvenyl
-[gitlabci-shield]: https://gitlab.com/whjvenyl/home-assistant-config/badges/master/pipeline.svg
-[gitlabci]: https://gitlab.com/whjvenyl/home-assistant-config/pipelines
 [home-assistant]: https://home-assistant.io
 [issue]: https://github.com/whjvenyl/home-assistant-config/issues
 [license-shield]: https://img.shields.io/github/license/whjvenyl/home-assistant-config.svg
