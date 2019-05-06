@@ -1,0 +1,9 @@
+---
+#
+# Customizes a light in Home Assistant
+#
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+#
+light.light_living_room_2:
+  friendly_name: Deckenlampe Wohnzimmer 2
+  icon: mdi:ceiling-light

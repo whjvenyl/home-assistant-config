@@ -1,0 +1,9 @@
+---
+# The Snips Voice Platform allows users to add powerful voice 
+# assistants to their Raspberry Pi devices without compromising on privacy. 
+#
+# https://www.home-assistant.io/components/snips/
+#
+snips:
+  # Custom Assistant Commands
+  intent_script: !include_dir_merge_named ./../assistants/snips/intents

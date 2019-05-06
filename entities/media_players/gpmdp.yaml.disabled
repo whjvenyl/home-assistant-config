@@ -1,0 +1,7 @@
+---
+# This component allows Google Music playback from Home Assistant
+#
+# https://www.home-assistant.io/components/media_player.gpmdp/
+#
+platform: gpmdp
+host: !secret gpmdp_host

@@ -114,14 +114,6 @@ light.lights_living_room_2:
 light.lights_bed_room:
   friendly_name: Schlafzimmer Lichter
   icon: mdi:bed-empty
-light.light_bedroom:
-  friendly_name: Deckenlampe Schlafzimmer
-  icon: mdi:ceiling-light
-light.light_living_room_2:
-  friendly_name: Deckenlampe Wohnzimmer 2
-  icon: mdi:ceiling-light
-light.light_entry:
-  friendly_name: Eingang
 light.lights_floor:
   friendly_name: Gang
 sensor.battery_radiator_office_1:

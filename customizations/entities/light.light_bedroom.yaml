@@ -1,0 +1,9 @@
+---
+#
+# Customizes a light in Home Assistant
+#
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+#
+light.light_bedroom:
+  friendly_name: Deckenlampe Schlafzimmer
+  icon: mdi:ceiling-light
